@@ -1,0 +1,92 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Organic Broccoli",
+      "price": 26.69,
+      "oldPrice": 28.56,
+      "rating": 4.5,
+      "stock": true,
+      "description": "Fresh organic broccoli rich in vitamins and fiber. Perfect for healthy meals.",
+      "image": "/assets/images/product1.png",
+      "category": "Vegetables & Fruit"
+    },
+    {
+      "id": 2,
+      "name": "Fresh Strawberries",
+      "price": 22.49,
+      "oldPrice": 25.00,
+      "rating": 4.7,
+      "stock": true,
+      "description": "Sweet and juicy strawberries freshly picked from the farm.",
+      "image": "/assets/images/product2.png",
+      "category": "Vegetables & Fruit"
+    },
+    {
+      "id": 3,
+      "name": "Almond Milk 1L",
+      "price": 15.99,
+      "oldPrice": 18.00,
+      "rating": 4.3,
+      "stock": true,
+      "description": "Plant-based almond milk, lactose-free and rich in calcium.",
+      "image": "/assets/images/product3.png",
+      "category": "Breakfast & Dairy"
+    },
+    {
+      "id": 4,
+      "name": "Fresh Salmon Fillet",
+      "price": 35.50,
+      "oldPrice": 39.99,
+      "rating": 4.8,
+      "stock": true,
+      "description": "Premium salmon fillet high in omega-3 and perfect for grilling.",
+      "image": "/assets/images/product4.png",
+      "category": "Meats & Seafood"
+    },
+    {
+      "id": 5,
+      "name": "Natural Honey 500ml",
+      "price": 12.99,
+      "oldPrice": 14.50,
+      "rating": 4.2,
+      "stock": true,
+      "description": "Pure organic honey from forest bees, great for tea or breakfast.",
+      "image": "/assets/images/product5.png",
+      "category": "Grocery & Staples"
+    },
+    {
+      "id": 6,
+      "name": "Orange Juice 1L",
+      "price": 9.99,
+      "oldPrice": 11.50,
+      "rating": 4.1,
+      "stock": true,
+      "description": "Fresh orange juice with no added sugar, full of vitamin C.",
+      "image": "/assets/images/product6.png",
+      "category": "Beverages"
+    },
+    {
+      "id": 7,
+      "name": "Mixed Nuts 250g",
+      "price": 19.99,
+      "oldPrice": 22.50,
+      "rating": 4.4,
+      "stock": true,
+      "description": "Healthy snack mix including almonds, cashews, and walnuts.",
+      "image": "/assets/images/product7.png",
+      "category": "Biscuits & Snacks"
+    },
+    {
+      "id": 8,
+      "name": "Organic Eggs (12 Pack)",
+      "price": 8.50,
+      "oldPrice": 10.00,
+      "rating": 4.6,
+      "stock": true,
+      "description": "Farm-fresh organic eggs from free-range chickens.",
+      "image": "/assets/images/product8.png",
+      "category": "Breakfast & Dairy"
+    }
+  ]
+}

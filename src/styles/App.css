@@ -1,0 +1,7 @@
+/* :root {
+  --color-base-content: oklch(97.807% 0.029 256.847);
+} */
+
+.disabled {
+  @apply disabled:bg-gray-400 disabled:text-gray-700 cursor-not-allowed;
+}
