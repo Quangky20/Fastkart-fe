@@ -3,7 +3,6 @@ import "./home.css";
 import { MapPin, Heart, ShoppingCart, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const HomePage: React.FC = () => {
   const [keyword, setKeyword] = useState("");
   const [products, setProducts] = useState<any[]>([]);
@@ -107,6 +106,16 @@ const HomePage: React.FC = () => {
     navigate(`/product/${id}`);
   };
 
+  const [cartItems, setCartItems] = useState<number>(0);
+
+// Lấy số lượng từ localStorage
+useEffect(() => {
+  const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const total = storedCart.reduce((sum: number, item: any) => sum + item.quantity, 0);
+  setCartItems(total);
+}, []);
+
+
   return (
     <div className="homepage">
       {/* --- HEADER --- */}
@@ -161,10 +170,11 @@ const HomePage: React.FC = () => {
 
           <div className="icons">
             <Heart className="icon" />
-            <div className="cart">
+            <Link to="/cart" className="cart">
               <ShoppingCart className="icon" />
-              <span className="cart-count">2</span>
-            </div>
+              <span className="cart-count">{cartItems}</span>
+            </Link>
+
             <Link to="/login">
               <User className="icon" />
             </Link>
@@ -280,7 +290,24 @@ const HomePage: React.FC = () => {
                       ⭐ {item.rating}{" "}
                       <span className="in-stock">In Stock</span>
                     </p>
-                    <button className="btn-add">Add +</button>
+                    <button
+                      className="btn-add"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const currentCart = JSON.parse(localStorage.getItem("cart") || "[]");
+                        const existing = currentCart.find((p: any) => p.id === item.id);
+                        if (existing) {
+                          existing.quantity += 1;
+                        } else {
+                          currentCart.push({ ...item, quantity: 1 });
+                        }
+                        localStorage.setItem("cart", JSON.stringify(currentCart));
+                        alert("🛒 Added to cart!");
+                      }}
+                    >
+                      Add +
+                    </button>
+
                   </div>
                 ))
               ) : (

@@ -1,3 +1,4 @@
+;
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/user/home";
 import Dashboard from "./pages/admin/dashboard/dashboard";
@@ -16,6 +17,8 @@ import NotFound from "./NotFound";
 import Shipping from "./pages/admin/shipping/shipping";
 import Profile from "./pages/admin/setting/profile";
 import ProductDetail from "./pages/user/ProductDetail";
+import CartPage from "./pages/user/CartPage";
+
 
 
 
@@ -64,6 +67,8 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/cart" element={<CartPage />} />
+        
         <Route path="/" element={<Home />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<Admin />}>

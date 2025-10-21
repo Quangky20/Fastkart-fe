@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import "./productDetail.css";
 import choco1 from "../../assets/images/choco1.jpg";
 import choco2 from "../../assets/images/choco2.jpg";
@@ -29,7 +29,8 @@ const sampleProducts = [
     origin: "Mỹ",
     shipping: "Toàn quốc",
     fee: "Miễn phí nội thành",
-    description: "Cupcake vani thơm ngọt, trang trí đẹp mắt, thích hợp tiệc sinh nhật.",
+    description:
+      "Cupcake vani thơm ngọt, trang trí đẹp mắt, thích hợp tiệc sinh nhật.",
     images: [
       "/assets/img/vanilla1.jpg",
       "/assets/img/vanilla2.jpg",
@@ -46,7 +47,8 @@ const sampleProducts = [
     origin: "Pháp",
     shipping: "Toàn quốc",
     fee: "Miễn phí vận chuyển",
-    description: "Bánh cheesecake vị dâu tây tươi, béo ngậy, hấp dẫn mọi lứa tuổi.",
+    description:
+      "Bánh cheesecake vị dâu tây tươi, béo ngậy, hấp dẫn mọi lứa tuổi.",
     images: [
       "/assets/img/strawberry1.jpg",
       "/assets/img/strawberry2.jpg",
@@ -58,8 +60,10 @@ const sampleProducts = [
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const product = sampleProducts.find((p) => p.id === id);
+  const navigate = useNavigate();
 
   const [mainImage, setMainImage] = useState(product?.images[0] || "");
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (product) setMainImage(product.images[0]);
@@ -68,6 +72,36 @@ const ProductDetail: React.FC = () => {
   if (!product) {
     return <p className="not-found">❌ Không tìm thấy sản phẩm!</p>;
   }
+
+  // ✅ Hàm thêm sản phẩm vào giỏ hàng
+  const handleAddToCart = () => {
+    const storedCart = localStorage.getItem("cart");
+    const cart = storedCart ? JSON.parse(storedCart) : [];
+
+    // Kiểm tra xem sản phẩm đã có trong giỏ chưa
+    const existingItem = cart.find((item: any) => item.id === product.id);
+
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        image: product.images[0],
+        price: product.price,
+        quantity: quantity,
+      });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // 🔄 Cập nhật header (cartCount)
+    window.dispatchEvent(new Event("cartUpdated"));
+
+    // ✅ Hiển thị thông báo hoặc điều hướng
+    alert("✅ Đã thêm vào giỏ hàng!");
+    // navigate("/cart"); // 👉 Bỏ comment nếu muốn chuyển đến giỏ hàng ngay
+  };
 
   return (
     <div className="card-wrapper">
@@ -97,12 +131,19 @@ const ProductDetail: React.FC = () => {
         {/* RIGHT DETAILS */}
         <div className="product-content">
           <h2 className="product-title">{product.name}</h2>
-          <Link to="/" className="product-link">Ghé thăm cửa hàng</Link>
+          <Link to="/" className="product-link">
+            Ghé thăm cửa hàng
+          </Link>
 
           <div className="start">
             <p className="text-2">Đánh giá:</p>
             {Array.from({ length: product.rating }).map((_, i) => (
-              <img key={i} className="start-1" src="/assets/img/star.png" alt="star" />
+              <img
+                key={i}
+                className="start-1"
+                src="/assets/img/star.png"
+                alt="star"
+              />
             ))}
           </div>
 
@@ -119,21 +160,37 @@ const ProductDetail: React.FC = () => {
             <h2>Về mặt hàng này:</h2>
             <p>{product.description}</p>
             <ul>
-              <li>Còn hàng: <span>{product.inStock ? "Trong kho" : "Hết hàng"}</span></li>
-              <li>Xuất xứ: <span>{product.origin}</span></li>
-              <li>Vận chuyển: <span>{product.shipping}</span></li>
-              <li>Phí vận chuyển: <span>{product.fee}</span></li>
+              <li>
+                Còn hàng:{" "}
+                <span>{product.inStock ? "Trong kho" : "Hết hàng"}</span>
+              </li>
+              <li>
+                Xuất xứ: <span>{product.origin}</span>
+              </li>
+              <li>
+                Vận chuyển: <span>{product.shipping}</span>
+              </li>
+              <li>
+                Phí vận chuyển: <span>{product.fee}</span>
+              </li>
             </ul>
           </div>
 
           <div className="purchase-info">
-            <input type="number" min="1" defaultValue="1" />
-            <button type="button" className="btn">
-              Thêm vào giỏ hàng <i className="fa fa-shopping-cart"></i>
+            <input
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+            />
+            <button type="button" className="btn" onClick={handleAddToCart}>
+              Thêm vào giỏ hàng 🛒
             </button>
           </div>
 
-          <Link to="/" className="btn-back">← Quay lại Trang chủ</Link>
+          <Link to="/" className="btn-back">
+            ← Quay lại Trang chủ
+          </Link>
         </div>
       </div>
     </div>
